@@ -1,0 +1,51 @@
+<%- include("partials/header") %>
+    <h1>Bill Generator</h1>
+    <div class="row">
+        <form action="/generatebill" method="POST" name="bill">
+            <div class="col-md-6">
+                <div>
+                    <div class="form-group">
+                        <label for="product">Product</label>
+                        <select class="form-control form-control-sm" id="product" name="product">
+                            <option value="0">Select product from dropdown</option>
+                            <% products.forEach(function(product){ %>
+                                <option value="<%= product.price %>"><%= product.code %> - <%= product.name %></option>
+                            <% }) %>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="qauntity">Quantity</label>
+                        <input class="form-control" type="number" id="quantity" name="quantity" value="1" min="1" required>
+                    </div>  
+                    <div class="form-group">
+                        <label for="price">Price</label>
+                        <input class="form-control" id="price" name="price" type="text" value="0" readonly>
+                    </div>
+                    <div class="form-group">
+                        <input type="button" class="btn btn-lg btn-primary btn-block" value="Add to Bill" 
+                            onclick="addProduct();
+                            this.form.reset();"
+                        >
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <table class="table" id="billTable">
+                    <thead>
+                        <tr>
+                            <th scope="col">Product</Code></th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">MRP</th>
+                            <th scope="col">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <input type="button" class="btn btn-lg btn-primary btn-block" onclick="postData()" value="Generate Bill">
+            <a href="/dashboard">Go Back</a>
+        </form>
+    </div>
+    <script src="scripts/script.js"></script>
+<%- include("partials/footer") %>

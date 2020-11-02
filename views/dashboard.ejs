@@ -1,0 +1,35 @@
+<%- include("partials/header") %>
+    <div class="col-md-3">
+        <div class="list-group">
+            <a href="/generatebill"><li class="list-group-item">Generate Bill</li></a>
+            <a href="/addstaff"><li class="list-group-item">Add Staff</li></a>
+            <a href="/addproduct"><li class="list-group-item">Add Product</li></a>
+            <a href="#"><li class="list-group-item">Update Stock</li></a>
+        </div>
+    </div>
+    <div class="col-md-9">
+        <input class="form-control" type="text" id="searchText" placeholder="Search" aria-label="Search">
+        <br>
+        <br>
+        <table class="table">
+        <thead>
+            <tr>
+            <th scope="col">Code</th>
+            <th scope="col">Product Name</th>
+            <th scope="col">Stock</th>
+            <th scope="col">Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% products.forEach(function(product){ %>
+                <tr>
+                    <td><%= product.code %></td>
+                    <td><%= product.name %></td>
+                    <td><%= product.stock %></td>
+                    <td><%= product.price %></td>
+                </tr>
+            <% }) %>
+        </tbody>
+        </table>	
+    </div>
+<%- include("partials/footer") %>
