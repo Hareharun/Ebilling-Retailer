@@ -5,6 +5,10 @@
             <div class="col-md-6">
                 <div>
                     <div class="form-group">
+                        <label for="phone">Phone</label>
+                        <input class="form-control" type="number" id="phone" name="phone" required>
+                    </div>
+                    <div class="form-group">
                         <label for="product">Product</label>
                         <select class="form-control form-control-sm" id="product" name="product">
                             <option value="0">Select product from dropdown</option>
@@ -23,8 +27,7 @@
                     </div>
                     <div class="form-group">
                         <input type="button" class="btn btn-lg btn-primary btn-block" value="Add to Bill" 
-                            onclick="addProduct();
-                            this.form.reset();"
+                            onclick="addProduct();"
                         >
                     </div>
                 </div>
@@ -43,7 +46,12 @@
                     </tbody>
                 </table>
             </div>
-            <input type="button" class="btn btn-lg btn-primary btn-block" onclick="postData()" value="Generate Bill">
+            <div class="form-group">
+                <input class="form-control" id="totalAmount" name="totalAmount" type="text" value="0" readonly>
+            </div>
+            <div class="form-group">
+                <input type="button" class="btn btn-lg btn-primary btn-block" onclick="postData()" value="Generate Bill">
+            </div>
             <a href="/dashboard">Go Back</a>
         </form>
     </div>

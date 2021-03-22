@@ -7,12 +7,17 @@ var express         = require("express"),
     LocalStrategy   = require("passport-local"),
     flash           = require("connect-flash"),
     User            = require("./models/user"),
-    Product         = require("./models/product")
+    Product         = require("./models/product"),
     session         = require("express-session"),
-    methodOverride  = require("method-override");
+    methodOverride  = require("method-override"),
+    admin           = require("firebase-admin"),
+    serviceAccount  = require("F:/Ebilling/e-billing-d7a2d-firebase-adminsdk-wckz5-f46482640d");
+
 
 //App Configure
-mongoose.connect("mongodb://localhost/ebilling", {useNewUrlParser: true});
+mongoose.connect("mongodb://localhost/ebilling", {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.set('useFindAndModify', false);
+mongoose.set('useCreateIndex', true);
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
@@ -40,6 +45,13 @@ app.use(function(req, res, next){
     res.locals.error = req.flash('error');
     next();
  });
+
+ //Configure Firebase
+ admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+    databaseURL: "https://e-billing-d7a2d.firebaseio.com"
+  });
+  var database = admin.database().ref().child("Bills");
 
  //Routes
 //Show Login Form(Start Page)
@@ -126,8 +138,36 @@ app.get("/generatebill", function(req,res){
 
 //Handling Bill Generate Logic
 app.post("/generatebill", function(req,res){
-    res.send(req.body.key);
-})
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = today.getFullYear();
+    today = dd + '/' + mm + '/' + yyyy;
+    //console.log(today);
+    //console.log(req.body);
+    var data = req.body.data;
+    var newBill = database.push();
+    var key = newBill.getKey();
+    /*
+    for(var i in data){
+        updateStock(data[i].ProductCode, data[i].Quantity);
+    }
+    */
+    newBill.set({
+        Phone: req.body.phone,
+        Bill: req.body.data,
+        id: key,
+        Purchase_Date: today,
+        Amount: req.body.amount
+    },function(err){
+        if(err){
+            console.log(err);
+        }else{
+            req.flash("success", "Bill Generated Successfully");
+            return res.redirect("/dashboard");
+        }
+    });
+});
 
 //Add Staff Page
 app.get("/addstaff",function(req,res){
