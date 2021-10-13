@@ -5,7 +5,7 @@
     <img src="images/logo.png" alt="Logo" width="80" height="80">
   </a>
 
-<h3 align="center">E-Billing</h3>
+<h3 align="center">E-Billing-Retailer</h3>
 
   <p align="center">
     project_description
@@ -49,7 +49,7 @@ It’s a two stage classification and reccomendation system which converts the p
 
 * [Javascript](https://www.javascript.com/)
 * [Node.js](https://nodejs.org/en/)
-* [Bootstrap](https://getbootstrap.com)
+* [EJS](https://ejs.co/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
